@@ -11,7 +11,7 @@
     <div id="cesiumContainer"></div>
     <script>
         // Get your token from https://cesium.com/ion/tokens
-        Cesium.Ion.defaultAccessToken = process.env.REACT_APP_ACCESS_TOKEN;
+        Cesium.Ion.defaultAccessToken = 'REPLACE-FROM-SECRETS';
         // STEP 4 CODE (replaces steps 2 and 3)
         // Keep your `Cesium.Ion.defaultAccessToken = 'your_token_here'` line from before here. 
         const viewer = new Cesium.Viewer('cesiumContainer', {
@@ -19,9 +19,12 @@
         });
         const osmBuildings = viewer.scene.primitives.add(Cesium.createOsmBuildings());
 
-        const api_url = 'https://run.mocky.io/v3/2066b272-1499-4b9c-959c-b55f88495e17'
+        // const api_url = 'https://run.mocky.io/v3/2066b272-1499-4b9c-959c-b55f88495e17';
+        const api_url = 'http://localhost:8081/chachkies';
 
-        fetch(api_url)
+        fetch(api_url, {
+            method: 'GET',
+        })
             .then(res => res.json())
             .then(flightData => {
                 /* Initialize the viewer clock:
@@ -72,7 +75,7 @@
 
                 async function loadModel() {
                     // Load the glTF model from Cesium ion.
-                    const airplaneUri = await Cesium.IonResource.fromAssetId(process.env.REACT_APP_ASSET_ID);
+                    const airplaneUri = await Cesium.IonResource.fromAssetId('REPLACE-FROM-SECRETS');
                     const airplaneEntity = viewer.entities.add({
                         availability: new Cesium.TimeIntervalCollection([new Cesium.TimeInterval({
                             start: start,
